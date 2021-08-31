@@ -10,10 +10,6 @@ variable "region" {
 variable "account" {
   type = string
 }
-variable "profile" {
-  type = string
-}
-
 
 variable "vpc_id" {
   type = string
