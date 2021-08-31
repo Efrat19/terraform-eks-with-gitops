@@ -10,12 +10,12 @@ module "example_cluster" {
   region              = "us-east-1"
   vpc_id              = "vpc-12345678"
   igw_id              = "igw-12345678"
-  vpc_private_subnets = ["10.130.112.0/22", "10.130.156.0/22","10.130.144.0/22"]
-  vpc_public_subnets  = ["10.130.110.0/24"]
+  vpc_private_subnets = ["x.x.x.x/x", "x.x.x.x/x","x.x.x.x/x"]
+  vpc_public_subnets  = "x.x.x.x/x"]
   nat_gateways        = ["nat-123456", "nat-654321", "nat-112233"] # NAT for each AZ, to save cross-region traffic
   cluster_name        = "example"
-  cluster_version     = "1.20"
-  vpc_cidr            = "10.130.0.0/16"
+  cluster_version     = "1.21"
+  vpc_cidr            = "x.x.x.x/x"
   auth_users          = ["terraform-iam-user", "my-iam-user"]
   managed_node_groups = [
     {
