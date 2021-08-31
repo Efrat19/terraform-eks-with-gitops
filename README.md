@@ -238,10 +238,9 @@ No modules.
 | <a name="output_workers_launch_template_ids"></a> [workers\_launch\_template\_ids](#output\_workers\_launch\_template\_ids) | IDs of the worker launch templates. |
 | <a name="output_workers_launch_template_latest_versions"></a> [workers\_launch\_template\_latest\_versions](#output\_workers\_launch\_template\_latest\_versions) | Latest versions of the worker launch templates. |
 | <a name="output_workers_user_data"></a> [workers\_user\_data](#output\_workers\_user\_data) | User data of worker groups |
-
-| <a name="private_subnets_ids"></a> [private_subnets_ids](#output\private_subnets_ids) | IDs of the created private subnets |
-| <a name="public_subnets_ids"></a> [public_subnets_ids](#output\public_subnets_ids) | IDs of the created public subnets |
-| <a name="cluster_private_rtb_ids"></a> [cluster_private_rtb_ids](#output\cluster_private_rtb_ids) | IDs of the created private route tables  |
-| <a name="cluster_public_rtb_id"></a> [cluster_public_rtb_id](#output\cluster_public_rtb_id) | ID of the created public route table |
-| <a name="irsa_roles"></a> [irsa_roles](#output\irsa_roles) | ARNs of the created IRSA roles |
+| <a name="private_subnets_ids"></a> [private\_subnets\_ids](#output\_private\_subnets\_ids) | IDs of the created private subnets |
+| <a name="public_subnets_ids"></a> [public\_subnets\_ids](#output\_public\_subnets\_ids) | IDs of the created public subnets |
+| <a name="cluster_private_rtb_ids"></a> [cluster\_private\_rtb\_ids](#output\_cluster\_private\_rtb\_ids) | IDs of the created private route tables  |
+| <a name="cluster_public_rtb_id"></a> [cluster\_publi\c_rtb\_id](#output\_cluster\_public\_rtb\_id) | ID of the created public route table |
+| <a name="irsa_roles"></a> [irsa\_roles](#output\_irsa\_roles) | ARNs of the created IRSA roles |
 
