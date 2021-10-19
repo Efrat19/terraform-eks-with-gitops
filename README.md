@@ -12,7 +12,7 @@ module "example_cluster" {
   igw_id              = "igw-12345678"
   vpc_private_subnets = ["x.x.x.x/x", "x.x.x.x/x","x.x.x.x/x"]
   vpc_public_subnets  = "x.x.x.x/x"]
-  nat_gateways        = ["nat-123456", "nat-654321", "nat-112233"] # NAT for each AZ, to save cross-region traffic
+  nat_gateways        = ["nat-123456", "nat-654321", "nat-112233"] # NAT for each AZ, to save cross-AZ traffic costs
   cluster_name        = "example"
   cluster_version     = "1.21"
   vpc_cidr            = "x.x.x.x/x"
