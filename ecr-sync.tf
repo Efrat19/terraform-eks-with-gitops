@@ -108,6 +108,9 @@ YAML
 resource "kubectl_manifest" "ecr-sync" {
   count     = var.ecr_sync_job ? 1 : 0
   yaml_body = local.ecr_creds_sync
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "github_repository_file" "ecr-sync" {

@@ -10,7 +10,7 @@ module "addons_flux" {
     namespace                = "flux-system"
     target_path              = var.flux_target_path
     default_network_policy   = true
-    version                  = "v0.16.1"
+    version                  = "v0.18.3"
     github_url               = var.flux_github_url
     create_github_repository = false
     repository               = var.flux_repo
@@ -18,7 +18,7 @@ module "addons_flux" {
     github_token             = ""
     branch                   = var.flux_branch
     flux_sync_branch         = ""
-    default_components       = ["source-controller", "kustomize-controller", "helm-controller", "notification-controller"]
+    default_components       = var.flux_default_components
     components               = []
     provider                 = "github"
     auto_image_update        = var.flux_auto_image_update

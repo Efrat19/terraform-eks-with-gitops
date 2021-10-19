@@ -70,6 +70,10 @@ variable "flux_auto_image_update" {
   type    = bool
 }
 
+variable "flux_default_components" {
+  default = ["source-controller", "kustomize-controller", "helm-controller", "notification-controller"]
+}
+
 variable "cluster_version" {
   default = "1.21"
 }

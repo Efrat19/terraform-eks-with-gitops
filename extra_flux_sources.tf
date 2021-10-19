@@ -30,9 +30,9 @@ resource "kubectl_manifest" "sync" {
   yaml_body  = each.value
   lifecycle {
     ignore_changes = [
-      yaml_incluster,
-      live_resource_version
+      yaml_incluster
     ]
+    create_before_destroy = true
   }
 }
 
