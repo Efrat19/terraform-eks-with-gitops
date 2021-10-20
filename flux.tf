@@ -5,12 +5,12 @@ module "addons_flux" {
   source  = "particuleio/addons/kubernetes"
   version = "2.14.0"
   flux2 = {
-    enabled                  = true
+    enabled                  = var.flux_enabled
     create_ns                = true
     namespace                = "flux-system"
     target_path              = var.flux_target_path
     default_network_policy   = true
-    version                  = "v0.18.3"
+    version                  = var.flux_version
     github_url               = var.flux_github_url
     create_github_repository = false
     repository               = var.flux_repo

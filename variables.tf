@@ -3,10 +3,10 @@ variable "igw_id" {
   type = string
 }
 
-
 variable "region" {
   type = string
 }
+
 variable "account" {
   type = string
 }
@@ -48,18 +48,31 @@ variable "enabled_metrics" {
 variable "auth_users" {
   default = []
 }
+
+variable "flux_enabled" {
+  default = true
+}
+
+variable "flux_version" {
+  default = "v0.18.3"
+}
+
 variable "flux_github_url" {
   default = ""
 }
+
 variable "flux_target_path" {
   default = ""
 }
+
 variable "flux_repo" {
   default = ""
 }
+
 variable "flux_branch" {
   default = "main"
 }
+
 variable "ecr_sync_job" {
   default = true
   type    = bool

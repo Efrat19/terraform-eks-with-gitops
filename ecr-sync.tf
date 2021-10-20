@@ -100,13 +100,13 @@ YAML
     role_name       = "${var.cluster_name}-ecr-sync"
     service_account = "system:serviceaccount:flux-system:ecr-credentials-sync"
     policies_to_assign = [
-      "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+      "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",      
     ]
   }] : []
 }
 
 resource "kubectl_manifest" "ecr-sync" {
-  count     = var.ecr_sync_job ? 1 : 0
+  count     = var.flux_enabled && var.ecr_sync_job ? 1 : 0
   yaml_body = local.ecr_creds_sync
   lifecycle {
     create_before_destroy = true
@@ -114,8 +114,8 @@ resource "kubectl_manifest" "ecr-sync" {
 }
 
 resource "github_repository_file" "ecr-sync" {
-  count      = var.ecr_sync_job ? 1 : 0
-  repository = data.github_repository.main.name
+  count      = var.flux_enabled && var.ecr_sync_job ? 1 : 0
+  repository = data.github_repository.main[0].name
   file       = "${var.flux_target_path}/${local.flux_manifests_path}/ecr-sync.yaml"
   content    = local.ecr_creds_sync
   branch     = var.flux_branch

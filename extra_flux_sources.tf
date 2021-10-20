@@ -1,15 +1,15 @@
 
 resource "tls_private_key" "main" {
-  count     = length(var.extra_flux_sources)
+  count     = var.flux_enabled ? length(var.extra_flux_sources) : 0
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 
 data "flux_sync" "main" {
+  count       = var.flux_enabled ? length(var.extra_flux_sources) : 0
   name        = var.extra_flux_sources[count.index].source_name
   secret      = "${var.extra_flux_sources[count.index].source_name}-secret"
-  count       = length(var.extra_flux_sources)
   target_path = var.extra_flux_sources[count.index].target_path
   url         = "ssh://git@github.com/${var.extra_flux_sources[count.index].github_owner}/${var.extra_flux_sources[count.index].repository_name}.git"
   branch      = var.extra_flux_sources[count.index].branch
@@ -19,7 +19,7 @@ data "flux_sync" "main" {
 
 
 data "kubectl_file_documents" "sync" {
-  count   = length(var.extra_flux_sources)
+  count   = var.flux_enabled ? length(var.extra_flux_sources) : 0
   content = data.flux_sync.main[count.index].content
 }
 
@@ -37,7 +37,7 @@ resource "kubectl_manifest" "sync" {
 }
 
 resource "kubernetes_secret" "main" {
-  count = length(var.extra_flux_sources)
+  count = var.flux_enabled ? length(var.extra_flux_sources) : 0
 
   metadata {
     name      = data.flux_sync.main[count.index].secret
@@ -53,11 +53,12 @@ resource "kubernetes_secret" "main" {
 
 # GitHub
 data "github_repository" "main" {
+  count = var.flux_enabled ? 1 : 0
   name = var.flux_repo
 }
 
 resource "github_repository_deploy_key" "main" {
-  count      = length(var.extra_flux_sources)
+  count      = var.flux_enabled ? length(var.extra_flux_sources) : 0
   title      = "${var.cluster_name}_${var.extra_flux_sources[count.index].source_name}_flux_deploy_key"
   repository = var.extra_flux_sources[count.index].repository_name
   key        = tls_private_key.main[count.index].public_key_openssh
@@ -65,8 +66,8 @@ resource "github_repository_deploy_key" "main" {
 }
 
 resource "github_repository_file" "sync" {
-  count      = length(var.extra_flux_sources)
-  repository = data.github_repository.main.name
+  count      = var.flux_enabled ? length(var.extra_flux_sources) : 0
+  repository = data.github_repository.main[0].name
   file       = "${var.flux_target_path}/${local.flux_manifests_path}/${var.extra_flux_sources[count.index].source_name}.yaml"
   content    = data.flux_sync.main[count.index].content
   branch     = var.flux_branch
