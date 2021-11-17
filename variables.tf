@@ -54,7 +54,7 @@ variable "flux_enabled" {
 }
 
 variable "flux_version" {
-  default = "v0.18.3"
+  default = "v0.21.1"
 }
 
 variable "flux_github_url" {
@@ -85,6 +85,11 @@ variable "flux_auto_image_update" {
 
 variable "flux_default_components" {
   default = ["source-controller", "kustomize-controller", "helm-controller", "notification-controller"]
+}
+
+variable "flux_patch_gotk" {
+  type = bool
+  default = false
 }
 
 variable "cluster_version" {

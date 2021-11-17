@@ -1,8 +1,8 @@
 
 resource "tls_private_key" "main" {
   count     = var.flux_enabled ? length(var.extra_flux_sources) : 0
-  algorithm = "RSA"
-  rsa_bits  = 4096
+  algorithm = "ECDSA" 
+  ecdsa_curve = "P521"
 }
 
 
@@ -25,7 +25,7 @@ data "kubectl_file_documents" "sync" {
 
 resource "kubectl_manifest" "sync" {
   #   count      = length(var.extra_flux_sources)
-  for_each   = { for v in local.sync : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content }
+  for_each   = var.flux_enabled ? { for v in local.sync : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content }: {}
   depends_on = [module.addons_flux]
   yaml_body  = each.value
   lifecycle {

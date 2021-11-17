@@ -3,7 +3,7 @@
 # https://github.com/particuleio/terraform-kubernetes-addons/blob/main/flux2.tf
 module "addons_flux" {
   source  = "particuleio/addons/kubernetes"
-  version = "2.14.0"
+  version = "2.36.2"
   flux2 = {
     enabled                  = var.flux_enabled
     create_ns                = true
@@ -24,12 +24,13 @@ module "addons_flux" {
     auto_image_update        = var.flux_auto_image_update
     custom_kustomize         = local.custom_kustomize
     known_hosts              = [local.known_hosts]
+    ignore_fields_apply      = ["spec.template.spec.containers.0.resources"] # ignore patch changes
   }
 }
 
 
 locals {
-  known_hosts = "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
+  known_hosts = "github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg="
   repos_str   = [for src in var.extra_flux_sources : src.source_name]
   ecr_sync_job_ks     = var.ecr_sync_job ? "- ecr-sync.yaml" : ""
   custom_kustomize    = <<YAML
@@ -43,5 +44,6 @@ resources:
 - gotk-components.yaml
 ${local.ecr_sync_job_ks}
 ${join("\n", formatlist("- %s.yaml", local.repos_str))}
+${local.add_patch_to_ks}
 YAML
 }
