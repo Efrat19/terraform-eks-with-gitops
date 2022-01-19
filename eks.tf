@@ -46,6 +46,7 @@ resource "aws_security_group" "workers_sg" {
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
+  version         = "17.24.0"
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
   subnets         = var.use_existing_private_subnets ? data.aws_subnet.existing_private_subnets.*.id : aws_subnet.cluster_private.*.id
