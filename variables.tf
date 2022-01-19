@@ -104,24 +104,8 @@ variable "use_existing_private_subnets" {
 
 
 variable "tags" {
-  type = object({
-    Env                = string
-    App                = string
-    Author             = string
-    Expires            = bool
-    ExpiryDate         = number
-    TaggingVersion     = number
-    ManagedByTerraform = bool
-  })
-  default = {
-    Env                = ""
-    App                = ""
-    Author             = ""
-    Expires            = false
-    ExpiryDate         = 0
-    TaggingVersion     = 1
-    ManagedByTerraform = true
-  }
+  type = any
+  default = {}
 }
 
 locals {
