@@ -62,12 +62,6 @@ module "example_cluster" {
   ]
   tags                   = {
     Env                = "example"
-    App                = "example-cluster"
-    Author             = "me"
-    Expires            = false
-    ExpiryDate         = 0
-    TaggingVersion     = 1
-    ManagedByTerraform = true
   }
   irsa_roles = [
     {
